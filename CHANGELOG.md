@@ -9,7 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [[PR #434](https://github.com/nf-core/chipseq/pull/434)] - Prevent pipeline fails from erroneous param validation when igenomes is used.
 
-
 ### Parameters
 
 | Old parameter | New parameter |
