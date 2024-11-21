@@ -71,7 +71,7 @@ workflow PREPARE_GENOME {
         }
     }
     else if (gff) {
-        if (gff.endsWith('.gz')) {                    
+        if (gff.endsWith('.gz')) {
             ch_gff = GUNZIP_GFF([[:], file(gff, checkIfExists: true)]).gunzip.map { it[1] }
             ch_versions = ch_versions.mix(GUNZIP_GFF.out.versions)
         }
@@ -79,10 +79,13 @@ workflow PREPARE_GENOME {
             ch_gff = Channel.value(file(gff, checkIfExists: true))
         }
 
+        //
+        // Detect gff file name stripped of extension and .gz
+        //
         extension = (gff - '.gz').tokenize('.')[-1]
         id = gff.toString() - '.gz' - ".${extension}"
 
-        ch_gtf = GFFREAD(ch_gff.map{[[id:id], it]}, []).gtf.map { it[1] }
+        ch_gtf = GFFREAD(ch_gff.map { [[id: id], it] }, []).gtf.map { it[1] }
 
         ch_versions = ch_versions.mix(GFFREAD.out.versions)
     }
