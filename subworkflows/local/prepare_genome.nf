@@ -81,9 +81,9 @@ workflow PREPARE_GENOME {
 
         //
         // Detect gff file name stripped of extension and .gz
-        //
+        //        
         extension = (gff - '.gz').tokenize('.')[-1]
-        id = gff.toString() - '.gz' - ".${extension}"
+        id = file(gff).baseName.toString() - '.gz' - ".${extension}"
 
         ch_gtf = GFFREAD(ch_gff.map { [[id: id], it] }, []).gtf.map { it[1] }
 
